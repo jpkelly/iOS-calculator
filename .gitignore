@@ -1,0 +1,9 @@
+# Compiled binary
+/calculator
+
+# Build artifacts / object files
+*.o
+*.dSYM/
+
+# macOS
+.DS_Store
