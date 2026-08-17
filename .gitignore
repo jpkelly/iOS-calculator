@@ -4,5 +4,15 @@
 *.o
 *.dSYM/
 
+# Swift Package Manager build output
+.build/
+.swiftpm/
+
+# Xcode user-specific / workspace state
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+DerivedData/
+
 # macOS
 .DS_Store
