@@ -150,12 +150,12 @@ final class CalculatorTests: XCTestCase {
         let c = Calculator()
         c.press(.digit(1)); c.press(.digit(2)); c.press(.op(.plus)); c.press(.digit(3)); c.press(.equals)
         XCTAssertEqual(c.display, "15")
-        XCTAssertEqual(c.expression, "12 + = ")
-    }
+         // The full expression (including the last operand) is shown.
+        XCTAssertEqual(c.expression, "12 + 3 = ")
+      }
+      // MARK: Op.apply
 
-    // MARK: Op.apply
-
-    func testOpApply() {
+       func testOpApply() {
         XCTAssertEqual(Op.plus.apply(2, 3), 5)
         XCTAssertEqual(Op.minus.apply(2, 3), -1)
         XCTAssertEqual(Op.multiply.apply(2, 3), 6)

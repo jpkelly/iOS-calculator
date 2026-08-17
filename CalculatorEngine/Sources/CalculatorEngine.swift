@@ -131,15 +131,18 @@ public final class Calculator {
 
     private func equals() {
         guard let op = pendingOp else { return }
+        // Capture the right operand BEFORE overwriting the display with the result.
+        let rightOperand = format(currentValue)
         let result = op.apply(accumulator, currentValue)
         accumulator = result
         display = format(result)
-        expression = expression.trimmingCharacters(in: .whitespaces) + " = "
+         // Append the final (right) operand so the full expression is shown,
+         // e.g. "5 × " + "3" -> "5 × 3 = " instead of just "5 × = ".
+        expression = expression.trimmingCharacters(in: .whitespaces)
+            + (rightOperand.isEmpty ? "" : " " + rightOperand) + " = "
         pendingOp = nil
         isFreshEntry = true
     }
-
-    // MARK: Unary actions
 
     private func backspace() {
         guard !display.isEmpty, display != "0" else { return }

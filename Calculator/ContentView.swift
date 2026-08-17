@@ -126,11 +126,16 @@ struct ContentView: View {
 
 private func displayArea(landscape: Bool) -> some View {
         VStack(alignment: .trailing, spacing: 4) {
+            // Expression wraps across lines. Operands and operators are
+             // space-separated, so default word wrapping only breaks between
+             // them and never splits a number in the middle.
             Text(expression)
-                 .font(.system(size: 17, weight: .regular))
-                 .foregroundColor(.mutedInk.opacity(0.75))
-                 .lineLimit(1)
-                 .frame(height: 26)
+                    .font(.system(size: 17, weight: .regular))
+                    .foregroundColor(.mutedInk.opacity(0.75))
+
+                   .lineLimit(nil)
+                   .fixedSize(horizontal: false, vertical: true)
+                   .frame(maxWidth: .infinity, alignment: .trailing)
             Text(groupedDisplay)
                    .font(.system(size: landscape ? 56 : 80, weight: .light, design: .rounded)
                           .monospacedDigit())
