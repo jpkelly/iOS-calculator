@@ -63,12 +63,12 @@ final class CalculatorTests: XCTestCase {
     }
 
     func testChainedOperatorsLastWins() {
-        // 2 + 3 + 4 = 7 (iOS behavior: pressing + after 3 sets the operand to 3).
+         // 2 + 3 + 4 = 9  (operators chain, matching iOS).
         let c = Calculator()
         c.press(.digit(2)); c.press(.op(.plus)); c.press(.digit(3))
         c.press(.op(.plus)); c.press(.digit(4)); c.press(.equals)
-        XCTAssertEqual(c.display, "7")
-    }
+        XCTAssertEqual(c.display, "9")
+       }
 
     func testResultContinuesIntoNextOperation() {
         // 2 + 3 = 5, then × 4 = 20
@@ -150,9 +150,25 @@ final class CalculatorTests: XCTestCase {
         let c = Calculator()
         c.press(.digit(1)); c.press(.digit(2)); c.press(.op(.plus)); c.press(.digit(3)); c.press(.equals)
         XCTAssertEqual(c.display, "15")
-         // The full expression (including the last operand) is shown.
-        XCTAssertEqual(c.expression, "12 + 3 = ")
-      }
+          // The full expression (including the result) is shown.
+        XCTAssertEqual(c.expression, "12 + 3 = 15")
+       }
+
+    func testEqualsRepeatsLeftOperandWhenNoRightOperand() {
+        // 5 + =  ->  5 + 5 = 10  (pressing = repeats the left operand).
+        let c = Calculator()
+        c.press(.digit(5)); c.press(.op(.plus)); c.press(.equals)
+        XCTAssertEqual(c.display, "10")
+        XCTAssertEqual(c.expression, "5 + 5 = 10")
+    }
+
+    func testMultiplyEqualsRepeatsLeftOperand() {
+        // 5 × =  ->  5 × 5 = 25  (pressing = repeats the left operand).
+        let c = Calculator()
+        c.press(.digit(5)); c.press(.op(.multiply)); c.press(.equals)
+        XCTAssertEqual(c.display, "25")
+        XCTAssertEqual(c.expression, "5 × 5 = 25")
+    }
       // MARK: Op.apply
 
        func testOpApply() {

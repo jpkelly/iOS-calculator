@@ -122,13 +122,20 @@ public final class Calculator {
             // Fold the just-typed operand into the running expression.
             let operand = format(currentValue)
             expression = expression.isEmpty ? operand : expression + operand
-            accumulator = currentValue
-        }
+
+             // Fold any pending operation before starting the new one, so chained
+             // operators accumulate: 2 + 2 + 2 => 6, not 4.
+            if let pending = pendingOp {
+                accumulator = pending.apply(accumulator, currentValue)
+                display = format(accumulator)    // show the intermediate result
+             } else {
+                accumulator = currentValue
+               }
+          }
         expression += " " + op.displaySymbol + " "
         pendingOp = op
         isFreshEntry = true
-    }
-
+     }
     private func equals() {
         guard let op = pendingOp else { return }
         // Capture the right operand BEFORE overwriting the display with the result.
@@ -136,10 +143,11 @@ public final class Calculator {
         let result = op.apply(accumulator, currentValue)
         accumulator = result
         display = format(result)
-         // Append the final (right) operand so the full expression is shown,
-         // e.g. "5 × " + "3" -> "5 × 3 = " instead of just "5 × = ".
+          // Append the final (right) operand and the computed result so the full
+          // expression is shown, e.g. "5 × " + "3" -> "5 × 3 = 15" instead of
+          // ending the line before the result, as in "5 × = " / "5 × 3 = ".
         expression = expression.trimmingCharacters(in: .whitespaces)
-            + (rightOperand.isEmpty ? "" : " " + rightOperand) + " = "
+             + (rightOperand.isEmpty ? "" : " " + rightOperand) + " = " + display
         pendingOp = nil
         isFreshEntry = true
     }
