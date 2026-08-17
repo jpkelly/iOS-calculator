@@ -1,4 +1,0 @@
-module CalculatorEngine {
-    header "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/CalculatorEngine-Swift.h"
-    requires objc
-}
