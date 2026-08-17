@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		250D7FD59ACB910584702651 /* CalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */; };
 		3176E9E88A0BD12204253A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057A1C0960A58FD56851781 /* ContentView.swift */; };
+		562C0E01FB7901B23FD38531 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537706B8B2DC017F656C2B77 /* AboutView.swift */; };
 		B5FF2E662311B3972771F724 /* CalculatorEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C0110122CC433748E9A4013A /* CalculatorEngine */; };
 /* End PBXBuildFile section */
 
@@ -17,6 +18,7 @@
 		3DC02FF328241DAF1CBAFACD /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4057A1C0960A58FD56851781 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		48CA877002694F0B88EE27AC /* CalculatorEngine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CalculatorEngine; sourceTree = SOURCE_ROOT; };
+		537706B8B2DC017F656C2B77 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +36,7 @@
 		2A849395AD10B736B83CDABD /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				537706B8B2DC017F656C2B77 /* AboutView.swift */,
 				2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */,
 				4057A1C0960A58FD56851781 /* ContentView.swift */,
 			);
@@ -94,7 +97,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1430;
 			};
 			buildConfigurationList = 237D2BA8516697622180F67A /* Build configuration list for PBXProject "Calculator" */;
 			developmentRegion = en;
@@ -123,6 +126,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				562C0E01FB7901B23FD38531 /* AboutView.swift in Sources */,
 				250D7FD59ACB910584702651 /* CalculatorApp.swift in Sources */,
 				3176E9E88A0BD12204253A20 /* ContentView.swift in Sources */,
 			);
@@ -168,7 +172,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -266,7 +269,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;

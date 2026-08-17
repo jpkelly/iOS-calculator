@@ -4,7 +4,9 @@ import Foundation
 
 // MARK: - Muted / earthy palette (mirrors the reference macOS app)
 
-private extension Color {
+// Internal (not private) so AboutView and any other view in the module can share
+// the same palette as the single source of truth.
+extension Color {
     static let bg       = Color(red: 0.095, green: 0.115, blue: 0.110) // deep green-slate
     static let opBg     = Color(red: 0.337, green: 0.475, blue: 0.427) // sage #56796d
     static let numBg    = Color(red: 0.180, green: 0.322, blue: 0.380) // slate-teal #2e5261
@@ -83,8 +85,10 @@ struct ContentView: View {
     @State private var calculator = Calculator()
     @State private var display: String = "0"
     @State private var expression: String = ""
+    @State private var showAbout = false
+    @State private var backspaceTapCount = 0
 
-// Layout constants (kept here so button size and the grid stay in sync).
+     // Layout constants (kept here so button size and the grid stay in sync).
      private let gridPadding: CGFloat = 16
      private let gridSpacing: CGFloat = 9
      private let columns = 4
@@ -110,11 +114,34 @@ struct ContentView: View {
                                fixedSize: buttonSize(for: geo.size.width, columns: columns))
                 }
             }
-            .padding(gridPadding)
-            .background(Color.bg.ignoresSafeArea())
+             .padding(gridPadding)
+             .background(Color.bg.ignoresSafeArea())
+             .fullScreenCover(isPresented: $showAbout) {
+                 AboutView()
+             }
         }
     }
+     // MARK: Key handling
 
+     // Route every press through the engine, then mirror its display/expression
+     // back into the UI. Also watches the backspace key: when the display is
+     // "0", backspace is a no-op in the engine, so three consecutive taps on an
+     // empty display opens the About screen instead of doing nothing.
+    private func handlePress(_ key: CalculatorKey) {
+        calculator.press(key)
+        display = calculator.display
+        expression = calculator.expression
+
+        if key == .backspace {
+            backspaceTapCount += 1
+            if display == "0" && backspaceTapCount >= 3 {
+                backspaceTapCount = 0
+                showAbout = true
+              }
+          } else {
+            backspaceTapCount = 0
+          }
+     }
     // Square button edge: fill the available width with N columns and N-1 gaps.
     private func buttonSize(for width: CGFloat, columns: Int) -> CGFloat {
         let available = width - (gridPadding * 2)
@@ -165,9 +192,7 @@ private func displayArea(landscape: Bool) -> some View {
                         CalcButtonView(button: button,
                                        width: fixedSize,
                                        fillVertically: fillVertically) {
-                            calculator.press(button.key)
-                            display = calculator.display
-                            expression = calculator.expression
+                            handlePress(button.key)
                          }
                      }
                  }
