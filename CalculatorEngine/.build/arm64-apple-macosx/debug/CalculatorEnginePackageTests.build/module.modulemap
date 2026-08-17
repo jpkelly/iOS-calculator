@@ -1,0 +1,4 @@
+module CalculatorEnginePackageTests {
+    header "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/CalculatorEnginePackageTests-Swift.h"
+    requires objc
+}

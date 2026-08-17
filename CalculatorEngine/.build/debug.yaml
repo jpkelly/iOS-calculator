@@ -1,0 +1,112 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "CalculatorEngine-arm64-apple-macosx15.0-debug.module": ["<CalculatorEngine-arm64-apple-macosx15.0-debug.module>"]
+  "CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.module": ["<CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.module>"]
+  "CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.test": ["<CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.test>"]
+  "CalculatorEngineTests-arm64-apple-macosx15.0-debug.module": ["<CalculatorEngineTests-arm64-apple-macosx15.0-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<CalculatorEngine-arm64-apple-macosx15.0-debug.module>"]
+  "test": ["<CalculatorEngine-arm64-apple-macosx15.0-debug.module>","<CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.test>","<CalculatorEngineTests-arm64-apple-macosx15.0-debug.module>"]
+default: "main"
+nodes:
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Sources/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Tests/CalculatorEngineTests/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Sources/CalculatorEngine.swift"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/sources"]
+    description: "Write auxiliary file /Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/sources"
+
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.derived/runner.swift"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/sources"]
+    description: "Write auxiliary file /Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/sources"
+
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.derived/runner.swift":
+    tool: test-entry-point-tool
+    inputs: []
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.derived/runner.swift"]
+
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/CalculatorEngine.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/runner.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/CalculatorTests.swift.o"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.product/Objects.LinkFileList"
+
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Tests/CalculatorEngineTests/CalculatorTests.swift"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/sources"]
+    description: "Write auxiliary file /Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/sources"
+
+  "/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+
+  "<CalculatorEngine-arm64-apple-macosx15.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/CalculatorEngine.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngine.swiftmodule"]
+    outputs: ["<CalculatorEngine-arm64-apple-macosx15.0-debug.module>"]
+
+  "<CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/runner.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEnginePackageTests.swiftmodule"]
+    outputs: ["<CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.module>"]
+
+  "<CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.test>":
+    tool: phony
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.xctest/Contents/MacOS/CalculatorEnginePackageTests"]
+    outputs: ["<CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.test>"]
+
+  "<CalculatorEngineTests-arm64-apple-macosx15.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/CalculatorTests.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngineTests.swiftmodule"]
+    outputs: ["<CalculatorEngineTests-arm64-apple-macosx15.0-debug.module>"]
+
+  "C.CalculatorEngine-arm64-apple-macosx15.0-debug.module":
+    tool: shell
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Sources/CalculatorEngine.swift","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/sources"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/CalculatorEngine.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngine.swiftmodule"]
+    description: "Compiling Swift Module 'CalculatorEngine' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","CalculatorEngine","-emit-dependencies","-emit-module","-emit-module-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngine.swiftmodule","-output-file-map","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/sources","-I","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx12.0","-enable-batch-mode","-index-store-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j16","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/CalculatorEngine-Swift.h","-swift-version","5","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","calculatorengine"]
+
+  "C.CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.module":
+    tool: shell
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.derived/runner.swift","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngineTests.swiftmodule","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/sources"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/runner.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEnginePackageTests.swiftmodule"]
+    description: "Compiling Swift Module 'CalculatorEnginePackageTests' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","CalculatorEnginePackageTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEnginePackageTests.swiftmodule","-output-file-map","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/sources","-I","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx12.0","-enable-batch-mode","-index-store-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j16","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/CalculatorEnginePackageTests-Swift.h","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","calculatorengine"]
+
+  "C.CalculatorEnginePackageTests-arm64-apple-macosx15.0-debug.test":
+    tool: shell
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngine.build/CalculatorEngine.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.build/runner.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/CalculatorTests.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.product/Objects.LinkFileList"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.xctest/Contents/MacOS/CalculatorEnginePackageTests"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.xctest/Contents/MacOS/CalculatorEnginePackageTests"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug","-o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.xctest/Contents/MacOS/CalculatorEnginePackageTests","-module-name","CalculatorEnginePackageTests","-Xlinker","-no_warn_duplicate_libraries","-Xlinker","-bundle","-Xlinker","-rpath","-Xlinker","@loader_path/../../../","@/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEnginePackageTests.product/Objects.LinkFileList","-target","arm64-apple-macosx13.0","-Xlinker","-add_ast_path","-Xlinker","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngine.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEnginePackageTests.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngineTests.swiftmodule","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.CalculatorEngineTests-arm64-apple-macosx15.0-debug.module":
+    tool: shell
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Tests/CalculatorEngineTests/CalculatorTests.swift","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngine.swiftmodule","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/sources"]
+    outputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/CalculatorTests.swift.o","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngineTests.swiftmodule"]
+    description: "Compiling Swift Module 'CalculatorEngineTests' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","CalculatorEngineTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules/CalculatorEngineTests.swiftmodule","-output-file-map","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/CalculatorEngineTests.build/sources","-I","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx13.0","-enable-batch-mode","-index-store-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j16","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-swift-version","5","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","calculatorengine"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Sources/","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Tests/CalculatorEngineTests/","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Package.swift","/Users/jp/Documents/GitHub/ios-calculator/CalculatorEngine/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+
