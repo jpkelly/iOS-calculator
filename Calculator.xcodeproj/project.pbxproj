@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		250D7FD59ACB910584702651 /* CalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */; };
 		3176E9E88A0BD12204253A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057A1C0960A58FD56851781 /* ContentView.swift */; };
+		48584ECD12C6AFB186C45807 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBCA15B5345012EB58093078 /* Assets.xcassets */; };
 		562C0E01FB7901B23FD38531 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537706B8B2DC017F656C2B77 /* AboutView.swift */; };
 		B5FF2E662311B3972771F724 /* CalculatorEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C0110122CC433748E9A4013A /* CalculatorEngine */; };
 /* End PBXBuildFile section */
@@ -19,6 +20,7 @@
 		4057A1C0960A58FD56851781 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		48CA877002694F0B88EE27AC /* CalculatorEngine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CalculatorEngine; sourceTree = SOURCE_ROOT; };
 		537706B8B2DC017F656C2B77 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		EBCA15B5345012EB58093078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +39,7 @@
 			isa = PBXGroup;
 			children = (
 				537706B8B2DC017F656C2B77 /* AboutView.swift */,
+				EBCA15B5345012EB58093078 /* Assets.xcassets */,
 				2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */,
 				4057A1C0960A58FD56851781 /* ContentView.swift */,
 			);
@@ -76,6 +79,7 @@
 			buildConfigurationList = 1F700D656F1DA1F1B2EA4D31 /* Build configuration list for PBXNativeTarget "Calculator" */;
 			buildPhases = (
 				40DE79EB170FE47D8E210C75 /* Sources */,
+				E92469830613AF2BF49A2FFA /* Resources */,
 				EE9013E5A21E568D0629FE7F /* Frameworks */,
 			);
 			buildRules = (
@@ -120,6 +124,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E92469830613AF2BF49A2FFA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48584ECD12C6AFB186C45807 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		40DE79EB170FE47D8E210C75 /* Sources */ = {
