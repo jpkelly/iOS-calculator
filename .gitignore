@@ -1,5 +1,4 @@
 # Compiled binary
-/calculator
 
 # Build artifacts / object files
 *.o

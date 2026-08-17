@@ -9,11 +9,18 @@ settings:
     TARGETED_DEVICE_FAMILY: "1,2"
     GENERATE_INFOPLIST_FILE: "YES"
 
+packages:
+  CalculatorEngine:
+    path: CalculatorEngine
+
 targets:
   Calculator:
     type: application
     platform: iOS
     sources: [Calculator]
+    dependencies:
+     - package: CalculatorEngine
+       product: CalculatorEngine
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.jpkelly.Calculator

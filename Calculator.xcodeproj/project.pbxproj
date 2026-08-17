@@ -6,12 +6,40 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		250D7FD59ACB910584702651 /* CalculatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */; };
+		3176E9E88A0BD12204253A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057A1C0960A58FD56851781 /* ContentView.swift */; };
+		B5FF2E662311B3972771F724 /* CalculatorEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C0110122CC433748E9A4013A /* CalculatorEngine */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorApp.swift; sourceTree = "<group>"; };
 		3DC02FF328241DAF1CBAFACD /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		41F267465629D5C208D0DB1E /* Calculator */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = Calculator; sourceTree = "<group>"; };
+		4057A1C0960A58FD56851781 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		48CA877002694F0B88EE27AC /* CalculatorEngine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CalculatorEngine; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		EE9013E5A21E568D0629FE7F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5FF2E662311B3972771F724 /* CalculatorEngine in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
+		2A849395AD10B736B83CDABD /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */,
+				4057A1C0960A58FD56851781 /* ContentView.swift */,
+			);
+			path = Calculator;
+			sourceTree = "<group>";
+		};
 		4B4C6274B4CD9FFE7747D468 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -23,9 +51,18 @@
 		6C225512BEF576A6CEBC6AF7 = {
 			isa = PBXGroup;
 			children = (
-				41F267465629D5C208D0DB1E /* Calculator */,
+				2A849395AD10B736B83CDABD /* Calculator */,
+				8AC27D02CF9D222D423FF284 /* Packages */,
 				4B4C6274B4CD9FFE7747D468 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		8AC27D02CF9D222D423FF284 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				48CA877002694F0B88EE27AC /* CalculatorEngine */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -36,6 +73,7 @@
 			buildConfigurationList = 1F700D656F1DA1F1B2EA4D31 /* Build configuration list for PBXNativeTarget "Calculator" */;
 			buildPhases = (
 				40DE79EB170FE47D8E210C75 /* Sources */,
+				EE9013E5A21E568D0629FE7F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -43,6 +81,7 @@
 			);
 			name = Calculator;
 			packageProductDependencies = (
+				C0110122CC433748E9A4013A /* CalculatorEngine */,
 			);
 			productName = Calculator;
 			productReference = 3DC02FF328241DAF1CBAFACD /* Calculator.app */;
@@ -55,7 +94,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1620;
 			};
 			buildConfigurationList = 237D2BA8516697622180F67A /* Build configuration list for PBXProject "Calculator" */;
 			developmentRegion = en;
@@ -66,6 +105,9 @@
 			);
 			mainGroup = 6C225512BEF576A6CEBC6AF7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4AB8F587796D433A3B622329 /* XCLocalSwiftPackageReference "CalculatorEngine" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4B4C6274B4CD9FFE7747D468 /* Products */;
 			projectDirPath = "";
@@ -81,6 +123,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				250D7FD59ACB910584702651 /* CalculatorApp.swift in Sources */,
+				3176E9E88A0BD12204253A20 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +168,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -221,6 +266,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -270,6 +316,20 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		4AB8F587796D433A3B622329 /* XCLocalSwiftPackageReference "CalculatorEngine" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = CalculatorEngine;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C0110122CC433748E9A4013A /* CalculatorEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CalculatorEngine;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7B04AF00D8A7A16191845F46 /* Project object */;
 }
