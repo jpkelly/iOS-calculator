@@ -18,7 +18,7 @@ private extension Color {
 
 /// A calculator button and its styling. `key` is forwarded to the engine.
 struct CalcButton: Identifiable {
-    enum Style { case op, top, num, white }
+    enum Style { case op, top, num, percent }
 
     var id: String { label }
     var label: String
@@ -31,8 +31,8 @@ struct CalcButton: Identifiable {
 /// The 5×4 button grid, matching the reference layout.
 private let buttonRows: [[CalcButton]] = [
     [CalcButton(label: "AC", key: .clear,        style: .top),
-      CalcButton(label: "⌫",  key: .backspace,    style: .white),
-     CalcButton(label: "%",  key: .percent,      style: .top),
+      CalcButton(label: "⌫",  key: .backspace,    style: .top),
+      CalcButton(label: "%",  key: .percent,      style: .percent),
      CalcButton(label: "÷",  key: .op(.divide),  style: .op)],
     [CalcButton(label: "7",  key: .digit(7),     style: .num),
      CalcButton(label: "8",  key: .digit(8),     style: .num),
@@ -48,10 +48,34 @@ private let buttonRows: [[CalcButton]] = [
      CalcButton(label: "+",  key: .op(.plus),    style: .op)],
     [CalcButton(label: "0",  key: .digit(0),     style: .num),
      CalcButton(label: ".",  key: .decimal,      style: .num),
-      CalcButton(label: "±",  key: .negate,       style: .op),
+      CalcButton(label: "⁺⁄₋",  key: .negate,      style: .num),
      CalcButton(label: "=",  key: .equals,       style: .op)],
 ]
-
+/// Landscape layout: 5 wide × 4 tall. The number pad (7–9 / 4–6 / 1–3 / 0 . ⁺⁄₋)
+/// sits on the left as a classic 3×4 block; the four operators stack in the
+/// fourth column and AC / ⌫ / % / = fill the fifth column.
+private let landscapeRows: [[CalcButton]] = [
+     [CalcButton(label: "7",  key: .digit(7),      style: .num),
+      CalcButton(label: "8",  key: .digit(8),      style: .num),
+      CalcButton(label: "9",  key: .digit(9),      style: .num),
+      CalcButton(label: "÷",  key: .op(.divide),   style: .op),
+      CalcButton(label: "AC", key: .clear,         style: .top)],
+     [CalcButton(label: "4",  key: .digit(4),      style: .num),
+      CalcButton(label: "5",  key: .digit(5),      style: .num),
+      CalcButton(label: "6",  key: .digit(6),      style: .num),
+      CalcButton(label: "×",  key: .op(.multiply), style: .op),
+      CalcButton(label: "⌫",  key: .backspace,     style: .top)],
+     [CalcButton(label: "1",  key: .digit(1),      style: .num),
+      CalcButton(label: "2",  key: .digit(2),      style: .num),
+      CalcButton(label: "3",  key: .digit(3),      style: .num),
+      CalcButton(label: "−",  key: .op(.minus),    style: .op),
+      CalcButton(label: "%",  key: .percent,       style: .percent)],
+     [CalcButton(label: "0",  key: .digit(0),      style: .num),
+      CalcButton(label: ".",  key: .decimal,       style: .num),
+      CalcButton(label: "⁺⁄₋",  key: .negate,      style: .num),
+      CalcButton(label: "+",  key: .op(.plus),     style: .op),
+      CalcButton(label: "=",  key: .equals,        style: .op)],
+]
 
 struct ContentView: View {
     // `@State` holds a reference to the engine; `display`/`expression` are read
@@ -67,19 +91,32 @@ struct ContentView: View {
 
     var body: some View {
         GeometryReader { geo in
-            let size = buttonSize(for: geo.size.width)
+            // Rotate the whole layout in landscape: 5 wide × 4 tall, numbers
+            // on the left; portrait stays 4 × 5 with square buttons.
+            let landscape = geo.size.width > geo.size.height
+            let rows = landscape ? landscapeRows : buttonRows
             VStack(spacing: 12) {
-                Spacer(minLength: 0)      // push the calculator to the bottom
-                displayArea
-                buttonGrid(buttonSize: size)
+                if landscape {
+                    displayArea(landscape: true)
+                    // Fill the remaining vertical space so the grid sits under
+                    // the display and reaches the bottom of the screen.
+                    buttonGrid(rows: rows, fillVertically: true, fixedSize: 0)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                } else {
+                    Spacer(minLength: 0)       // push the calculator to the bottom
+                    displayArea(landscape: false)
+                    buttonGrid(rows: rows,
+                               fillVertically: false,
+                               fixedSize: buttonSize(for: geo.size.width, columns: columns))
+                }
             }
             .padding(gridPadding)
             .background(Color.bg.ignoresSafeArea())
         }
-     }
+    }
 
-     // Square button edge: fill the available width with 4 columns and 3 gaps.
-     private func buttonSize(for width: CGFloat) -> CGFloat {
+    // Square button edge: fill the available width with N columns and N-1 gaps.
+    private func buttonSize(for width: CGFloat, columns: Int) -> CGFloat {
         let available = width - (gridPadding * 2)
         let gaps = CGFloat(columns - 1) * gridSpacing
         return (available - gaps) / CGFloat(columns)
@@ -87,15 +124,16 @@ struct ContentView: View {
 
     // MARK: Display (two-line: expression above result)
 
-    private var displayArea: some View {
+private func displayArea(landscape: Bool) -> some View {
         VStack(alignment: .trailing, spacing: 4) {
             Text(expression)
-                .font(.system(size: 17, weight: .regular))
-                .foregroundColor(.mutedInk.opacity(0.75))
-                .lineLimit(1)
-                .frame(height: 26)
+                 .font(.system(size: 17, weight: .regular))
+                 .foregroundColor(.mutedInk.opacity(0.75))
+                 .lineLimit(1)
+                 .frame(height: 26)
             Text(groupedDisplay)
-                  .font(.system(size: 80, weight: .light, design: .rounded).monospacedDigit())
+                   .font(.system(size: landscape ? 56 : 80, weight: .light, design: .rounded)
+                          .monospacedDigit())
                  .foregroundColor(.warmInk)
                  .lineLimit(1)
                  .minimumScaleFactor(0.3)
@@ -113,12 +151,15 @@ struct ContentView: View {
 
      // MARK: Button grid
 
-    private func buttonGrid(buttonSize: CGFloat) -> some View {
+    private func buttonGrid(rows: [[CalcButton]], fillVertically: Bool,
+                            fixedSize: CGFloat) -> some View {
         VStack(spacing: gridSpacing) {
-            ForEach(buttonRows.indices, id: \.self) { row in
+            ForEach(rows.indices, id: \.self) { row in
                 HStack(spacing: gridSpacing) {
-                    ForEach(buttonRows[row]) { button in
-                        CalcButtonView(button: button, size: buttonSize) {
+                    ForEach(rows[row]) { button in
+                        CalcButtonView(button: button,
+                                       width: fixedSize,
+                                       fillVertically: fillVertically) {
                             calculator.press(button.key)
                             display = calculator.display
                             expression = calculator.expression
@@ -165,16 +206,20 @@ private func groupedNumber(_ raw: String) -> String {
 /// A rounded, layer-backed style button driven by a tap gesture.
 private struct CalcButtonView: View {
     let button: CalcButton
-    let size: CGFloat
+    let width: CGFloat
+    let fillVertically: Bool
     let action: () -> Void
 
-     @State private var scale: CGFloat = 1.0
+      @State private var scale: CGFloat = 1.0
 
     var body: some View {
         Text(button.label)
-             .font(fontFor(button.style))
-             .foregroundColor(foregroundFor(button.style))
-             .frame(width: size, height: size)
+              .font(fontFor(button.style))
+              .foregroundColor(foregroundFor(button.style))
+              .frame(width: fillVertically ? nil : width,
+                     height: fillVertically ? nil : width)
+              .frame(maxWidth: fillVertically ? .infinity : nil,
+                     maxHeight: fillVertically ? .infinity : nil)
             .background(bgFor(button.style))
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
             .scaleEffect(scale)
@@ -187,22 +232,26 @@ private struct CalcButtonView: View {
 
     private func fontFor(_ style: CalcButton.Style) -> Font {
         switch style {
-        case .op:  return .system(size: 32, weight: .medium)
-        case .top: return .system(size: 32, weight: .medium)
-        case .num: return .system(size: 30, weight: .regular)
+        case .op:      return .system(size: 35, weight: .medium)
+        case .top:     return .system(size: 32, weight: .medium)
+        case .num:     return .system(size: 30, weight: .regular)
+        case .percent: return .system(size: 32, weight: .medium)  // 3pt smaller than operators
+         }
+     }
 
     private func foregroundFor(_ style: CalcButton.Style) -> Color {
         switch style {
-        case .op, .top: return .darkInk
+        case .op, .top, .percent: return .darkInk
         case .num:      return .warmInk
         }
     }
 
     private func bgFor(_ style: CalcButton.Style) -> Color {
         switch style {
-        case .op:  return .opBg
-        case .top: return .topBg
-        case .num: return .numBg
+        case .op:      return .opBg
+        case .top:     return .topBg
+        case .num:     return .numBg
+        case .percent: return .opBg    // same color scheme as the operators
         }
     }
 }
