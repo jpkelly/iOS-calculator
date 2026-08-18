@@ -65,7 +65,9 @@ public final class Calculator {
     private var pendingOp: Op?
     private var accumulator: Double = 0
 
-    public init() {}
+      /// Set right after "=". Lets an operator pressed immediately after "=" continue
+      /// the chain from the result (e.g. "5 + 5 = +" -> "5 + 5 = 10 + ").
+    private var justEvaluated: Bool = false
 
     // MARK: Public API
 
@@ -76,6 +78,7 @@ public final class Calculator {
         pendingOp = nil
         accumulator = 0
         isFreshEntry = true
+        justEvaluated = false
     }
 
     /// Handles a button press and updates the display.
@@ -131,26 +134,32 @@ public final class Calculator {
              } else {
                 accumulator = currentValue
                }
-          }
+              } else if justEvaluated {
+                 // Operator right after "=": continue the chain from the result,
+                 // e.g. "5 + 5 = +" -> "5 + 5 = 10 + ".
+                expression = expression.trimmingCharacters(in: .whitespaces) + " " + display
+              }
+        justEvaluated = false
         expression += " " + op.displaySymbol + " "
         pendingOp = op
         isFreshEntry = true
      }
     private func equals() {
         guard let op = pendingOp else { return }
-        // Capture the right operand BEFORE overwriting the display with the result.
+         // A bare "=" after an operator (or a previous "=") repeats the left
+         // operand: 5 + = -> "5 + 5", 5 + 5 = + = -> "5 + 5 = 10 + 10". The
+         // result stays on the display only, never appended to the expression.
         let rightOperand = format(currentValue)
         let result = op.apply(accumulator, currentValue)
         accumulator = result
         display = format(result)
-          // Append the final (right) operand and the computed result so the full
-          // expression is shown, e.g. "5 × " + "3" -> "5 × 3 = 15" instead of
-          // ending the line before the result, as in "5 × = " / "5 × 3 = ".
+         // Append the right operand and a trailing "=" so the expression reads
+         // e.g. "5 × 3 =", with the result shown only on the main display.
         expression = expression.trimmingCharacters(in: .whitespaces)
-             + (rightOperand.isEmpty ? "" : " " + rightOperand) + " = " + display
-        pendingOp = nil
+               + (rightOperand.isEmpty ? "" : " " + rightOperand) + " ="
+        justEvaluated = true
         isFreshEntry = true
-    }
+        }
 
     private func backspace() {
         guard !display.isEmpty, display != "0" else { return }

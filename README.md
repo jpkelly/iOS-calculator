@@ -29,7 +29,7 @@ progress grind to a halt.
 
 - **SwiftUI app** that wraps a framework-independent engine.
 - **`CalculatorEngine`** — a pure-Swift package holding all calculation logic,
-  with no UI dependency and its own test suite (23 tests).
+  with no UI dependency and its own test suite (30 tests).
 - **`Calculator`** — the SwiftUI front end (`ContentView`) that drives the engine.
 - Port of an earlier native macOS/Cocoa calculator (`calculator.mm`), which
   remains in the repo as the reference implementation.
@@ -78,7 +78,7 @@ driving a small local model — comes in a few flavors:
 - **Off-by-one logic bugs in the app.** The thousand-separator was originally
   grouped from the left (`1000000` → `100,000,0`); it now groups from the
   right. Separately, `=` used to drop the final operand from the expression
-  line. Both surfaced through the unit tests — the point being that a 23-test
+  line. Both surfaced through the unit tests — the point being that a 30-test
   suite catches what a one-shot model does not.
 - **Human in the loop.** Across ~11 sessions the model was steered, reviewed,
   and occasionally restarted by hand — the loop a local model needs to reach a
