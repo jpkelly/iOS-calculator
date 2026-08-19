@@ -11,6 +11,7 @@
 		3176E9E88A0BD12204253A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4057A1C0960A58FD56851781 /* ContentView.swift */; };
 		48584ECD12C6AFB186C45807 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBCA15B5345012EB58093078 /* Assets.xcassets */; };
 		562C0E01FB7901B23FD38531 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537706B8B2DC017F656C2B77 /* AboutView.swift */; };
+		66234E7AAAEAC1B83C2F0723 /* GitInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B160ADEA8244FC3B7EED3E /* GitInfo.swift */; };
 		B5FF2E662311B3972771F724 /* CalculatorEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C0110122CC433748E9A4013A /* CalculatorEngine */; };
 /* End PBXBuildFile section */
 
@@ -20,6 +21,7 @@
 		4057A1C0960A58FD56851781 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		48CA877002694F0B88EE27AC /* CalculatorEngine */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CalculatorEngine; sourceTree = SOURCE_ROOT; };
 		537706B8B2DC017F656C2B77 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		A6B160ADEA8244FC3B7EED3E /* GitInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitInfo.swift; sourceTree = "<group>"; };
 		EBCA15B5345012EB58093078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -42,6 +44,7 @@
 				EBCA15B5345012EB58093078 /* Assets.xcassets */,
 				2DDAAB62C209D963C4CE77F0 /* CalculatorApp.swift */,
 				4057A1C0960A58FD56851781 /* ContentView.swift */,
+				A6B160ADEA8244FC3B7EED3E /* GitInfo.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -78,6 +81,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1F700D656F1DA1F1B2EA4D31 /* Build configuration list for PBXNativeTarget "Calculator" */;
 			buildPhases = (
+				6B2F669BB61F7776DA03A0EE /* Update Git Commit Hash */,
 				40DE79EB170FE47D8E210C75 /* Sources */,
 				E92469830613AF2BF49A2FFA /* Resources */,
 				EE9013E5A21E568D0629FE7F /* Frameworks */,
@@ -136,6 +140,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6B2F669BB61F7776DA03A0EE /* Update Git Commit Hash */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Update Git Commit Hash";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\nset -e\n\nGIT_HASH=$(git rev-parse --short=7 HEAD 2>/dev/null || echo \"\")\n\nif [ -z \"$GIT_HASH\" ]; then\n    # If git hash is empty, keep the existing placeholder\n    echo \"No git hash available, keeping placeholder\"\n    exit 0\nfi\n\n# Check if file exists and content matches\nFILE_PATH=\"${SRCROOT}/Calculator/GitInfo.swift\"\nif [ -f \"$FILE_PATH\" ]; then\n    CURRENT_HASH=$(grep -o 'static let commitHash = \"[^\"]*\"' \"$FILE_PATH\" | cut -d'\"' -f2)\n    if [ \"$CURRENT_HASH\" = \"$GIT_HASH\" ]; then\n        echo \"Git hash unchanged, skipping update\"\n        exit 0\n    fi\nfi\n\n# Update the file with new hash\nsed -i '' \"s/static let commitHash = \\\".*\\\"/static let commitHash = \\\"$GIT_HASH\\\"/\" \"$FILE_PATH\"\necho \"Updated GitInfo.swift with commit hash: $GIT_HASH\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		40DE79EB170FE47D8E210C75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -144,6 +169,7 @@
 				562C0E01FB7901B23FD38531 /* AboutView.swift in Sources */,
 				250D7FD59ACB910584702651 /* CalculatorApp.swift in Sources */,
 				3176E9E88A0BD12204253A20 /* ContentView.swift in Sources */,
+				66234E7AAAEAC1B83C2F0723 /* GitInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

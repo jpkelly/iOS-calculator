@@ -28,3 +28,30 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
+    preBuildScripts:
+      - name: Update Git Commit Hash
+        script: |
+          #!/bin/bash
+          set -e
+          
+          GIT_HASH=$(git rev-parse --short=7 HEAD 2>/dev/null || echo "")
+          
+          if [ -z "$GIT_HASH" ]; then
+              # If git hash is empty, keep the existing placeholder
+              echo "No git hash available, keeping placeholder"
+              exit 0
+          fi
+          
+          # Check if file exists and content matches
+          FILE_PATH="${SRCROOT}/Calculator/GitInfo.swift"
+          if [ -f "$FILE_PATH" ]; then
+              CURRENT_HASH=$(grep -o 'static let commitHash = "[^"]*"' "$FILE_PATH" | cut -d'"' -f2)
+              if [ "$CURRENT_HASH" = "$GIT_HASH" ]; then
+                  echo "Git hash unchanged, skipping update"
+                  exit 0
+              fi
+          fi
+          
+          # Update the file with new hash
+          sed -i '' "s/static let commitHash = \".*\"/static let commitHash = \"$GIT_HASH\"/" "$FILE_PATH"
+          echo "Updated GitInfo.swift with commit hash: $GIT_HASH"

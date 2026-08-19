@@ -10,9 +10,8 @@ struct AboutView: View {
 
     private var versionString: String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        if let build = build, !build.isEmpty, build != version {
-            return "\(version) (\(build))"
+        if !GitInfo.commitHash.isEmpty, GitInfo.commitHash != "0000000" {
+            return "\(version) (\(GitInfo.commitHash))"
         }
         return version
     }
