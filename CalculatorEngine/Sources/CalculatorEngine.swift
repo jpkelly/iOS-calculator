@@ -69,6 +69,8 @@ public final class Calculator {
       /// the chain from the result (e.g. "5 + 5 = +" -> "5 + 5 = 10 + ").
     private var justEvaluated: Bool = false
 
+    public init() {}
+
     // MARK: Public API
 
     /// Returns the engine to its initial state.
@@ -134,11 +136,11 @@ public final class Calculator {
              } else {
                 accumulator = currentValue
                }
-              } else if justEvaluated {
-                 // Operator right after "=": continue the chain from the result,
-                 // e.g. "5 + 5 = +" -> "5 + 5 = 10 + ".
-                expression = expression.trimmingCharacters(in: .whitespaces) + " " + display
-              }
+          } else if justEvaluated {
+             // Operator right after "=": continue the chain from the result,
+             // e.g. "5 + 5 = +" -> "5 + 5 = 10 + ".
+            expression = expression.trimmingCharacters(in: .whitespaces) + " " + display
+          }
         justEvaluated = false
         expression += " " + op.displaySymbol + " "
         pendingOp = op
@@ -146,20 +148,18 @@ public final class Calculator {
      }
     private func equals() {
         guard let op = pendingOp else { return }
-         // A bare "=" after an operator (or a previous "=") repeats the left
-         // operand: 5 + = -> "5 + 5", 5 + 5 = + = -> "5 + 5 = 10 + 10". The
-         // result stays on the display only, never appended to the expression.
+        // Capture the right operand BEFORE overwriting the display with the result.
         let rightOperand = format(currentValue)
         let result = op.apply(accumulator, currentValue)
         accumulator = result
         display = format(result)
-         // Append the right operand and a trailing "=" so the expression reads
+         // Append the final (right) operand and a trailing "=" so the expression reads
          // e.g. "5 × 3 =", with the result shown only on the main display.
         expression = expression.trimmingCharacters(in: .whitespaces)
-               + (rightOperand.isEmpty ? "" : " " + rightOperand) + " ="
-        justEvaluated = true
+             + (rightOperand.isEmpty ? "" : " " + rightOperand) + " ="
+        pendingOp = nil
         isFreshEntry = true
-        }
+    }
 
     private func backspace() {
         guard !display.isEmpty, display != "0" else { return }
